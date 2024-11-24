@@ -1,5 +1,5 @@
-import React from 'react';
-import { FileText, Share2 } from 'lucide-react';
+import React from "react";
+import { FileText, Share2 } from "lucide-react";
 
 interface PreviewProps {
   formData: any;
@@ -9,7 +9,9 @@ export function Preview({ formData }: PreviewProps) {
   return (
     <div className="space-y-8">
       <div className="bg-gray-50 rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">{formData.propertyDetails.title}</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          {formData.propertyDetails.title}
+        </h2>
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
             <p className="text-sm text-gray-500">Location</p>
@@ -22,12 +24,22 @@ export function Preview({ formData }: PreviewProps) {
         </div>
         <div className="prose max-w-none">
           {formData.generatedListing ? (
-            <div dangerouslySetInnerHTML={{ __html: formData.generatedListing }} />
+            <div>
+              {typeof formData.generatedListing === "string" ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: formData.generatedListing,
+                  }}
+                />
+              ) : (
+                <pre>{JSON.stringify(formData.generatedListing, null, 2)}</pre>
+              )}
+            </div>
           ) : (
             <p className="text-gray-500 italic">No listing generated yet.</p>
           )}
         </div>
-        
+
         {formData.images.length > 0 && (
           <div className="grid grid-cols-3 gap-4 mb-6 mt-6">
             {formData.images.slice(0, 3).map((image: string, index: number) => (
